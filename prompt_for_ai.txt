@@ -1,0 +1,45 @@
+You are a SQL expert. Write DuckDB SQL for the table below.
+
+Table: customers
+Columns:
+- RowNumber (BIGINT)
+- CustomerId (BIGINT)
+- Surname (VARCHAR)
+- CreditScore (BIGINT)
+- Geography (VARCHAR)
+- Gender (VARCHAR)
+- Age (BIGINT)
+- Tenure (BIGINT)
+- Balance (DOUBLE)
+- NumOfProducts (BIGINT)
+- HasCrCard (BIGINT)
+- IsActiveMember (BIGINT)
+- EstimatedSalary (DOUBLE)
+- Exited (BIGINT)
+- Complain (BIGINT)
+- Satisfaction Score (BIGINT)
+- Card Type (VARCHAR)
+- Point Earned (BIGINT)
+
+Rules:
+- Use only the table and columns above.
+- Each query must be a single SELECT statement.
+- Put double quotes around column names that contain spaces.
+- Return only SQL, no explanations.
+- Use exactly this format, one block per question:
+-- Q1
+SELECT ...;
+-- Q2
+SELECT ...;
+
+Questions:
+Q1. How many customers are there in total?
+Q2. How many customers have exited?
+Q3. What is the average credit score?
+Q4. How many customers are there in each country?
+Q5. Who are the top 5 customers by balance?
+Q6. What is the average estimated salary by gender?
+Q7. What is the churn rate (%) for each card type?
+Q8. What is the churn rate (%) for active vs inactive members?
+Q9. How many customers complained, and how many of them exited?
+Q10. Among German customers with a balance above the overall average, how many are there and what is their churn rate (%)?
