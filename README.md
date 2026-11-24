@@ -49,8 +49,19 @@ instead of two, and Q9 returned one row instead of a split by `Complain`.
 The scoring is strict, so these count as wrong. I kept the first score
 as it is.
 
-The AI step was done manually in a chat window (no API key was used);
-only the scoring is automated.
+The first test (8/10) was done manually in a chat window (no API key was used).
+The repo now also includes `run_ai_test.py`, which calls the Gemini API and scores
+the answers automatically (see below). Its results are not part of the 8/10 above.
+
+## Safety check for AI-written SQL
+
+Before any AI-generated query is run, `sql_guard.py`:
+
+- accepts only a single `SELECT` statement (blocks `DROP`, `DELETE`, `UPDATE`, `COPY`, multiple statements)
+- scans for write/admin keywords (this also catches a `DELETE` hidden inside a `WITH`)
+- runs it on a read-only database connection with file/network access switched off
+
+Tests: `uv run python -m pytest`
 
 ## How to run
 
@@ -68,6 +79,15 @@ uv run build_summary.py  # creates the summary/*.csv files used by the dashboard
 uv run streamlit run app.py   # opens the dashboard in your browser
 ```
 
+Fully automated AI test (needs a Gemini API key in a local `.env`: `GEMINI_API_KEY=...`):
+
+```bash
+uv run make_prompt.py
+uv run run_ai_test.py    # asks Gemini, saves its SQL, prints the score
+```
+
+Optional: set `GEMINI_MODEL` in `.env` to choose the model.
+
 ## Files
 
 | File | Purpose |
@@ -78,7 +98,11 @@ uv run streamlit run app.py   # opens the dashboard in your browser
 | `golden_set.py` | 10 questions with verified correct SQL |
 | `make_prompt.py` | Builds the prompt for the AI assistant |
 | `ai_answers_v1.sql` | The AI's SQL from the first test |
-| `score.py` | Compares AI results with the golden set |
+| `score.py` | Compares AI results with the golden set (`uv run score.py [file.sql]`) |
+| `scoring.py` | Shared scoring logic |
+| `sql_guard.py` | SELECT-only safety check and read-only connection |
+| `run_ai_test.py` | Calls the Gemini API and scores the answers automatically |
+| `tests/` | Unit tests for the safety check |
 | `results_v1.txt` | Output of the first test (8/10) |
 | `build_summary.py` | Exports summary tables to `summary/` |
 | `app.py` | Streamlit dashboard of the churn findings |
@@ -87,9 +111,8 @@ uv run streamlit run app.py   # opens the dashboard in your browser
 
 ## What I would improve next
 
-- Call an AI API directly so the whole test runs without manual steps.
+- Run `run_ai_test.py` with a real API key and report that score separately.
 - Rewrite the two ambiguous questions and report a second score separately.
-- Add a safety check that only allows SELECT queries before running AI-generated SQL.
 
 ## Author
 
