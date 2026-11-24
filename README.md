@@ -4,6 +4,8 @@ A small data project on a bank customer dataset. I analysed churn with SQL
 (DuckDB) and then measured how accurately an AI assistant can write SQL for
 business questions about the same data.
 
+![Churn overview](docs/churn_overview.png)
+
 ## What this project does
 
 1. Loads 10,000 bank customers (3 countries) into a DuckDB database.
@@ -14,7 +16,7 @@ business questions about the same data.
 
 ## Tools
 
-Python, DuckDB, pandas, SQL, Git/GitHub, uv
+Python, DuckDB, pandas, SQL, Streamlit, Plotly, Git/GitHub, uv
 
 ## Key findings
 
@@ -62,6 +64,8 @@ uv run golden_set.py     # prints the 10 verified answers
 uv run make_prompt.py    # creates the prompt to give to an AI assistant
 # save the AI's SQL in ai_answers.sql, then:
 uv run score.py          # prints CORRECT / WRONG per question and the score
+uv run build_summary.py  # creates the summary/*.csv files used by the dashboard
+uv run streamlit run app.py   # opens the dashboard in your browser
 ```
 
 ## Files
@@ -76,6 +80,10 @@ uv run score.py          # prints CORRECT / WRONG per question and the score
 | `ai_answers_v1.sql` | The AI's SQL from the first test |
 | `score.py` | Compares AI results with the golden set |
 | `results_v1.txt` | Output of the first test (8/10) |
+| `build_summary.py` | Exports summary tables to `summary/` |
+| `app.py` | Streamlit dashboard of the churn findings |
+| `summary/` | Aggregated results (no customer-level data) |
+| `docs/churn_overview.png` | Chart used in this README |
 
 ## What I would improve next
 

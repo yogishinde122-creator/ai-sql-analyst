@@ -1,7 +1,7 @@
 [project]
 name = "ai-sql-analyst"
 version = "0.1.0"
-description = "Add your description here"
+description = "Bank customer churn analysis in SQL (DuckDB) and an automated accuracy test of AI-written SQL"
 readme = "README.md"
 authors = [
     { name = "YOGESH  SHINDE", email = "yogishinde122@gmail.com" }
